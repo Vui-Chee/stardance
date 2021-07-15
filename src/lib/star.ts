@@ -9,8 +9,6 @@ import {
 } from "./constants"
 
 export class Star {
-  static globalState: Record<string, number>
-
   ctx: CanvasRenderingContext2D
   x: number
   y: number
