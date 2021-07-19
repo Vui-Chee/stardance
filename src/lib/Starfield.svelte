@@ -9,6 +9,18 @@
   let canvas: HTMLCanvasElement
   let ctx: CanvasRenderingContext2D
 
+  // handle window resize
+  function handleResize() {
+    canvas.width = canvas.offsetWidth
+    canvas.height = canvas.offsetHeight
+    // Clear everything within old canvas size.
+    ctx.clearRect(0, 0, window.innerWidth, window.innerHeight)
+
+    stars.length = 0 // Clears all references.
+    stars = generateStars(canvas.offsetWidth, ctx)
+    renderStars(stars)
+  }
+
   onMount(async () => {
     ctx = canvas.getContext("2d")
 
@@ -39,6 +51,7 @@
 <div id="starfield-ui">
   <canvas id="starfield" bind:this={canvas} />
 </div>
+<svelte:window on:resize={handleResize} />
 
 <style>
   #starfield-ui {
