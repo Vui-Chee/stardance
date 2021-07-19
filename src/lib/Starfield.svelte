@@ -48,18 +48,10 @@
   })
 </script>
 
-<div id="starfield-ui">
-  <canvas id="starfield" bind:this={canvas} />
-</div>
+<canvas id="starfield" bind:this={canvas} />
 <svelte:window on:resize={handleResize} />
 
 <style>
-  #starfield-ui {
-    position: relative;
-    width: 100%;
-    height: 100%;
-  }
-
   canvas#starfield {
     position: fixed;
     z-index: 1000;
