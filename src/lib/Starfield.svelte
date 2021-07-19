@@ -1,5 +1,6 @@
 <script lang="ts">
   import { onMount } from "svelte"
+  import { FRAMERATE } from "./constants"
   import type { Star } from "./star"
   import { generateStars, renderStars } from "./star"
 
@@ -17,6 +18,21 @@
 
     stars = generateStars(canvas.offsetWidth, ctx)
     renderStars(stars)
+
+    // Render a new stars per frame
+    let frame: number
+    function step() {
+      ctx.clearRect(0, 0, window.innerWidth, window.innerHeight)
+      renderStars(stars)
+
+      setTimeout(function () {
+        frame = requestAnimationFrame(step)
+      }, FRAMERATE)
+    }
+
+    requestAnimationFrame(step)
+
+    return () => cancelAnimationFrame(frame)
   })
 </script>
 
