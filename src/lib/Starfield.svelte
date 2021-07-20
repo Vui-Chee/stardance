@@ -12,30 +12,15 @@
   let canvas: HTMLCanvasElement
   let ctx: CanvasRenderingContext2D
 
-  // Theme related state
+  // Reactive theme related state
   let isDark = true // control theme
-
-  let theme = {
+  $: theme = {
     primary: isDark ? "#262a36" : "#fb5508",
     secondary: isDark ? "#101218" : "#fb6621",
   }
   $: cssVarStyles = Object.entries(theme)
     .map(([key, value]) => `--${key}:${value}`)
     .join(";")
-
-  function toggleTheme(isDark: boolean) {
-    if (isDark) {
-      theme = {
-        primary: "#262a36",
-        secondary: "#101218",
-      }
-    } else {
-      theme = {
-        primary: "#fb5508",
-        secondary: "#fb6621",
-      }
-    }
-  }
 
   // handle window resize
   function handleResize() {
@@ -50,22 +35,22 @@
   }
 
   function handleMessage(event: CustomEvent) {
-    toggleTheme(event.detail.isDark)
     if (event.detail.isDark) {
+      isDark = true
       localStorage.setItem("theme", "dark")
     } else {
+      isDark = false
       localStorage.setItem("theme", "light")
     }
   }
 
   onMount(async () => {
-    let theme = localStorage.getItem("theme")
-    if (theme === "dark") {
+    // Setup theme on mount
+    if (localStorage.getItem("theme") === "dark") {
       isDark = true
     } else {
       isDark = false
     }
-    toggleTheme(isDark)
 
     ctx = canvas.getContext("2d")
 
