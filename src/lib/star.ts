@@ -69,7 +69,7 @@ export class Star {
 export function generateStars(
   offsetWidth: number,
   ctx: CanvasRenderingContext2D,
-  color: number[]
+  color: number[] = []
 ): Star[] {
   let stars: Star[] = []
   let numStars = Math.min(STARCOUNT, Math.round(2 * offsetWidth))
