@@ -13,10 +13,11 @@
   let ctx: CanvasRenderingContext2D
 
   // Reactive theme related state
-  let isDark = true // control theme
+  let isDark = true
   $: theme = {
-    primary: isDark ? "#262a36" : "#fb5508",
-    secondary: isDark ? "#101218" : "#fb6621",
+    primary: isDark ? "#262a36" : "#ff9b05",
+    secondary: isDark ? "#101218" : "#ff9900",
+    starcolor: isDark ? [167, 180, 224] : [0, 0, 0],
   }
   $: cssVarStyles = Object.entries(theme)
     .map(([key, value]) => `--${key}:${value}`)
@@ -30,7 +31,7 @@
     ctx.clearRect(0, 0, window.innerWidth, window.innerHeight)
 
     stars.length = 0 // Clears all references.
-    stars = generateStars(canvas.offsetWidth, ctx)
+    stars = generateStars(canvas.offsetWidth, ctx, theme.starcolor)
     renderStars(stars)
   }
 
@@ -42,6 +43,16 @@
       isDark = false
       localStorage.setItem("theme", "light")
     }
+    theme = {
+      primary: isDark ? "#262a36" : "#ffc266",
+      secondary: isDark ? "#101218" : "#ff9900",
+      starcolor: isDark ? [167, 180, 224] : [0, 0, 0],
+    }
+    stars.forEach((star) =>
+      star.update({
+        color: theme.starcolor,
+      })
+    )
   }
 
   onMount(async () => {
@@ -51,6 +62,11 @@
     } else {
       isDark = false
     }
+    theme = {
+      primary: isDark ? "#262a36" : "#ffc266",
+      secondary: isDark ? "#101218" : "#ff9900",
+      starcolor: isDark ? [167, 180, 224] : [0, 0, 0],
+    }
 
     ctx = canvas.getContext("2d")
 
@@ -59,6 +75,11 @@
     canvas.height = canvas.offsetHeight
 
     stars = generateStars(canvas.offsetWidth, ctx)
+    stars.forEach((star) =>
+      star.update({
+        color: theme.starcolor,
+      })
+    )
     renderStars(stars)
 
     // Render a new stars per frame
