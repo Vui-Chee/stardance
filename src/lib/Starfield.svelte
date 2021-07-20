@@ -74,12 +74,7 @@
     canvas.width = canvas.offsetWidth
     canvas.height = canvas.offsetHeight
 
-    stars = generateStars(canvas.offsetWidth, ctx)
-    stars.forEach((star) =>
-      star.update({
-        color: theme.starcolor,
-      })
-    )
+    stars = generateStars(canvas.offsetWidth, ctx, theme.starcolor)
     renderStars(stars)
 
     // Render a new stars per frame
