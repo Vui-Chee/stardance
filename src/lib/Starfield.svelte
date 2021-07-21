@@ -17,7 +17,7 @@
   $: theme = {
     primary: isDark ? "#262a36" : "#ff9b05",
     secondary: isDark ? "#101218" : "#ff9900",
-    starcolor: isDark ? [167, 180, 224] : [0, 0, 0],
+    starcolor: isDark ? [255, 153, 0] : [0, 0, 0],
   }
   $: cssVarStyles = Object.entries(theme)
     .map(([key, value]) => `--${key}:${value}`)
@@ -43,16 +43,6 @@
       isDark = false
       localStorage.setItem("theme", "light")
     }
-    theme = {
-      primary: isDark ? "#262a36" : "#ffc266",
-      secondary: isDark ? "#101218" : "#ff9900",
-      starcolor: isDark ? [167, 180, 224] : [0, 0, 0],
-    }
-    stars.forEach((star) =>
-      star.update({
-        color: theme.starcolor,
-      })
-    )
   }
 
   onMount(async () => {
@@ -62,18 +52,11 @@
     } else {
       isDark = false
     }
-    theme = {
-      primary: isDark ? "#262a36" : "#ffc266",
-      secondary: isDark ? "#101218" : "#ff9900",
-      starcolor: isDark ? [167, 180, 224] : [0, 0, 0],
-    }
 
     ctx = canvas.getContext("2d")
-
     // update canvas width/height to full screen
     canvas.width = canvas.offsetWidth
     canvas.height = canvas.offsetHeight
-
     stars = generateStars(canvas.offsetWidth, ctx, theme.starcolor)
     renderStars(stars)
 
@@ -81,7 +64,7 @@
     let frame: number
     function step() {
       ctx.clearRect(0, 0, window.innerWidth, window.innerHeight)
-      renderStars(stars)
+      renderStars(stars, theme.starcolor)
 
       setTimeout(function () {
         frame = requestAnimationFrame(step)

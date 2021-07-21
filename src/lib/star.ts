@@ -79,9 +79,12 @@ export function generateStars(
   return stars
 }
 
-export function renderStars(stars: Star[]) {
+export function renderStars(stars: Star[], colors: number[] = []) {
   for (var i = 0; i < stars.length; i++) {
     stars[i].move()
+    if (colors.length === 3) {
+      stars[i].update({ color: colors })
+    }
     stars[i].draw()
   }
 }
