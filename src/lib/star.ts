@@ -33,23 +33,15 @@ export class Star {
   }
 
   move() {
-    // Move Z in fixed increments per frame
-    const deltaZ = 260
+    // Since tan(theta) = theta for small angles
     const xzAngle = 0.01 // rad
     const yzAngle = -0.001 // rad
-
-    let newZ = this.z + deltaZ
-    let oldX = this.x
-    let oldY = this.y
-
-    // Since tan(theta) = theta for small angles
-    let newX = oldX + newZ * xzAngle
-    let newY = oldY + newZ * yzAngle
-    let n = oldY * -yzAngle + newZ
-
+    let adjustedZ = this.z + FOV
+    let newX = this.x + adjustedZ * xzAngle
+    let newY = this.y + adjustedZ * yzAngle
     this.x = this.resetCoordinate(newX)
     this.y = this.resetCoordinate(newY)
-    this.z = this.resetCoordinate(n) - deltaZ
+    this.z = this.resetCoordinate(this.y * -yzAngle + adjustedZ) - FOV
   }
 
   update(star: Partial<Star>) {
