@@ -1,4 +1,4 @@
-import { STARCOUNT, RADIUS, FOV, ANGLE, VERT, CRUISE } from "./constants"
+import { STARCOUNT, RADIUS, FOV, CRUISE } from "./constants"
 
 export class Star {
   ctx: CanvasRenderingContext2D
@@ -32,6 +32,26 @@ export class Star {
     this.ctx.fill()
   }
 
+  move() {
+    // Move Z in fixed increments per frame
+    const deltaZ = 260
+    const xzAngle = 0.01 // rad
+    const yzAngle = -0.001 // rad
+
+    let newZ = this.z + deltaZ
+    let oldX = this.x
+    let oldY = this.y
+
+    // Since tan(theta) = theta for small angles
+    let newX = oldX + newZ * xzAngle
+    let newY = oldY + newZ * yzAngle
+    let n = oldY * -yzAngle + newZ - CRUISE
+
+    this.x = this.resetCoordinate(newX)
+    this.y = this.resetCoordinate(newY)
+    this.z = this.resetCoordinate(n) - deltaZ
+  }
+
   update(star: Partial<Star>) {
     Object.keys(star).forEach((key) => {
       this[key] = star[key]
@@ -45,24 +65,6 @@ export class Star {
       coord = -RADIUS // NEGATED radius.
     }
     return coord
-  }
-
-  move() {
-    let cosineAngle = Math.cos(ANGLE)
-    let sineAngle = Math.sin(ANGLE)
-    let cosineVert = Math.cos(VERT)
-    let sineVert = Math.sin(VERT)
-
-    let oldX = this.x
-    let oldY = this.y
-    var newZ = this.z + FOV
-    var newX = oldX * cosineAngle + newZ * sineAngle
-    var newY = oldY * cosineVert + newZ * sineVert
-    var n = oldY * -sineVert + newZ * cosineVert - CRUISE
-
-    this.x = this.resetCoordinate(newX)
-    this.y = this.resetCoordinate(newY)
-    this.z = this.resetCoordinate(n) - FOV
   }
 }
 
@@ -80,7 +82,7 @@ export function generateStars(
 }
 
 export function renderStars(stars: Star[], colors: number[] = []) {
-  for (var i = 0; i < stars.length; i++) {
+  for (let i = 0; i < stars.length; i++) {
     stars[i].move()
     if (colors.length === 3) {
       stars[i].update({ color: colors })

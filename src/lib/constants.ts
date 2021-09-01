@@ -6,18 +6,12 @@ export const FOV = 260
 
 export const CRUISE = 0.01
 
-export const ANGLE = 0.01
-
-export const VERT = -0.001
-
-export const FRAMERATE = 50
+export const FRAMERATE = 60
 
 export default {
   STARCOUNT,
   RADIUS,
   FOV,
   CRUISE,
-  ANGLE,
-  VERT,
   FRAMERATE,
 }
