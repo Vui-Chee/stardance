@@ -4,14 +4,11 @@ export const RADIUS = 600 // Refers to radius of star cluster near bottom of can
 
 export const FOV = 260
 
-export const CRUISE = 0.01
-
 export const FRAMERATE = 60
 
 export default {
   STARCOUNT,
   RADIUS,
   FOV,
-  CRUISE,
   FRAMERATE,
 }

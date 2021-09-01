@@ -1,4 +1,4 @@
-import { STARCOUNT, RADIUS, FOV, CRUISE } from "./constants"
+import { STARCOUNT, RADIUS, FOV } from "./constants"
 
 export class Star {
   ctx: CanvasRenderingContext2D
@@ -45,7 +45,7 @@ export class Star {
     // Since tan(theta) = theta for small angles
     let newX = oldX + newZ * xzAngle
     let newY = oldY + newZ * yzAngle
-    let n = oldY * -yzAngle + newZ - CRUISE
+    let n = oldY * -yzAngle + newZ
 
     this.x = this.resetCoordinate(newX)
     this.y = this.resetCoordinate(newY)
