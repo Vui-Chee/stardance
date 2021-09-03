@@ -1,11 +1,12 @@
 <script lang="ts">
   import { onMount } from "svelte"
 
-  import { FRAMERATE } from "./constants"
   import type { Star } from "./star"
   import { generateStars, renderStars } from "./star"
 
   import ToggleTheme from "./ToggleTheme.svelte"
+
+  const FRAMERATE = 60
 
   // All states
   let stars: Star[] = []
